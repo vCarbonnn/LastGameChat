@@ -1,7 +1,9 @@
 // ==UserScript==
 // @name         Mod Tools Last Game Chat
-// @author		 Carbon
+// @author	 	 Carbon
 // @version      0.3
+// @description  Small and helpful enhancement to Chat in TagPro Mod Tools
+// @updateURL    https://github.com/vCarbonnn/LastGameChat/raw/master/ModToolsLastGameChat.user.js
 // @include      http://tagpro-*.koalabeast.com/moderate/*
 // ==/UserScript==
 
