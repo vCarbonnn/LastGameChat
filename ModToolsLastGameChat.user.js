@@ -1,66 +1,47 @@
 // ==UserScript==
 // @name         Mod Tools Last Game Chat
 // @author	 	 Carbon
-// @version      0.5
+// @version      2.0
 // @description  Small and helpful enhancement to Chat in TagPro Mod Tools
 // @updateURL    https://github.com/vCarbonnn/LastGameChat/raw/master/ModToolsLastGameChat.user.js
-// @include      http://tagpro-*.koalabeast.com/moderate/*
+// @include      http://tagpro-*.koalabeast.com/moderate/chat*
 // ==/UserScript==
 
-var restoreID;
-var restoreIP;
-var matchVar = 0;
+var active = false;
+var filterIP;
+var filterUserId;
 
-if ((window.location.pathname.indexOf("chat") > -1)||(window.location.pathname.indexOf("userid") > -1)) {
-    $(".buttons").append("<button id='lastGameChat' class='small' onclick='lastGameChat()'>Last Game Chat</button>");
-    document.getElementById("lastGameChat").addEventListener('click',function () {
-       var filterIP = document.getElementById("filterIP").value;
-       var filterUserId = document.getElementById("filterUserId").value;
-       if (filterIP.match(/\S/)) {
-        matchVar = 1;
-        restoreIP = filterIP;
-        document.getElementById("filterIP").value = "";
-        document.getElementById("filterUserId").value = "";
-        document.getElementById("filterDisplayName").value = "";
-        document.getElementById("filterGameId").value = $('a[class ="dynamicFilter ipchecked"]')[0].innerText;
-        document.getElementById("filterButton").click();
-    }
-    else if (filterUserId.match(/\S/)) {
-        matchVar = 2;
-        restoreID = filterUserId;
-        document.getElementById("filterIP").value = "";
-        document.getElementById("filterUserId").value = "";
-        document.getElementById("filterDisplayName").value = "";
-        document.getElementById("filterGameId").value = $('a[class ="dynamicFilter ipchecked"]')[0].innerText;
-        document.getElementById("filterButton").click();
-    }
-    $(".buttons").append("<button id='restoreChat' class='small' onclick='restoreChat()'>Restore Chat</button>");
-    document.getElementById("restoreChat").addEventListener('click',function () {
-        document.getElementById("filterDisplayName").value = "";
-        document.getElementById("filterGameId").value = "";
-        if(matchVar==1) {
-           document.getElementById("filterIP").value = restoreIP;
-           document.getElementById("filterUserId").value = "";
-       }
-       else if(matchVar==2) {
-           document.getElementById("filterUserId").value = restoreID;
-           document.getElementById("filterIP").value = "";
-       }
-       document.getElementById("restoreChat").outerHTML='';
-       document.getElementById("filterButton").click();
-   });
+$(".buttons").append("<button id='lastGameChat' class='small'>Last Game Chat</button>");
+console.log("added button");
+document.getElementById("lastGameChat").addEventListener('click',function () {
+	active = !active;
+	if(active) {
+		filterIP = document.getElementById("filterIP").value;
+        filterUserId = document.getElementById("filterUserId").value;
+    	getLastGameChat();
+	} else {
+		getRestoredChat();
+	}
 });
+
+function getLastGameChat() {
+	try {
+		document.getElementById("filterGameId").value = document.getElementById("reportRows").children[0].children[0].innerText;
+		document.getElementById("filterIP").value = "";
+	    document.getElementById("filterUserId").value = "";
+	    document.getElementById("filterDisplayName").value = "";
+	    document.getElementById("filterButton").click();
+		document.getElementById("lastGameChat").innerText = "Restore Chat";
+	} catch(err) {
+		document.getElementById("lastGameChat").innerText = "Too Fast";
+	}
 }
 
-if (window.location.pathname.indexOf("users") > -1) {
-    document.getElementById("filterName").onkeypress = function(e) {
-        var event = e || window.event;
-        var charCode = event.which || event.keyCode;
-
-        if ( charCode == '13' ) {
-            document.getElementById("filterHours").value = "whenever";
-            document.getElementById("filterButton").click();
-            return false;
-        }
-    };
+function getRestoredChat() {
+    document.getElementById("filterIP").value = filterIP;
+    document.getElementById("filterUserId").value = filterUserId;
+    document.getElementById("filterGameId").value = "";
+	document.getElementById("filterDisplayName").value = "";
+    document.getElementById("filterButton").click();
+    document.getElementById("lastGameChat").innerText = "Last Game Chat";
 }
