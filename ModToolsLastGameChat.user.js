@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Mod Tools Last Game Chat
-// @author	 	 Carbon
+// @author       Carbon
 // @version      2.1
 // @description  Small and helpful enhancement to Chat in TagPro Mod Tools
 // @updateURL    https://github.com/vCarbonnn/LastGameChat/raw/master/ModToolsLastGameChat.user.js
@@ -12,7 +12,7 @@ var filterIP;
 var filterUserId;
 
 $(".buttons").append("<button id='lastGameChat' class='small'>Last Game Chat</button>");
-document.getElementById("lastGameChat").addEventListener('click',function () {
+document.getElementById("lastGameChat").addEventListener('click', function () {
     active = !active;
     if(active) {
         filterIP = document.getElementById("filterIP").value;
