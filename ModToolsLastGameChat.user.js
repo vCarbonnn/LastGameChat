@@ -13,27 +13,27 @@ var filterUserId;
 
 $(".buttons").append("<button id='lastGameChat' class='small'>Last Game Chat</button>");
 document.getElementById("lastGameChat").addEventListener('click',function () {
-	active = !active;
-	if(active) {
-		filterIP = document.getElementById("filterIP").value;
+    active = !active;
+    if(active) {
+        filterIP = document.getElementById("filterIP").value;
     	filterUserId = document.getElementById("filterUserId").value;
     	getLastGameChat();
-	} else {
-		getRestoredChat();
-	}
+    } else {
+        getRestoredChat();
+    }
 });
 
 function getLastGameChat() {
-	try {
-	    document.getElementById("filterGameId").value = document.getElementById("reportRows").children[0].children[0].innerText;
-	    document.getElementById("filterIP").value = "";
-	    document.getElementById("filterUserId").value = "";
-	    document.getElementById("filterDisplayName").value = "";
-	    document.getElementById("filterButton").click();
-	    document.getElementById("lastGameChat").innerText = "Restore Chat";
-	} catch(err) {
-	    document.getElementById("lastGameChat").innerText = "Too Fast";
-	}
+    try {
+        document.getElementById("filterGameId").value = document.getElementById("reportRows").children[0].children[0].innerText;
+        document.getElementById("filterIP").value = "";
+        document.getElementById("filterUserId").value = "";
+        document.getElementById("filterDisplayName").value = "";
+        document.getElementById("filterButton").click();
+        document.getElementById("lastGameChat").innerText = "Restore Chat";
+    } catch(err) {
+        document.getElementById("lastGameChat").innerText = "Too Fast";
+    }
 }
 
 function getRestoredChat() {
